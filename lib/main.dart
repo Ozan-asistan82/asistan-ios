@@ -133,6 +133,7 @@ class AsistanAnaSayfaState extends State<AsistanAnaSayfa>
     "Japonca",
     "Almanca",
     "İspanyolca",
+    "İtalyanca",
     "Çince",
     "Rusça",
     "Fransızca",
@@ -332,7 +333,7 @@ class AsistanAnaSayfaState extends State<AsistanAnaSayfa>
                   isim.contains("kadin") ||
                   isim.contains("zira") ||
                   isim.contains("haruka") ||
-                  isim.contains("nanami") ||
+                  isim.contains("nanami") || isim.contains("alice") || isim.contains("federica") ||
                   isim.contains("sunhi") ||
                   isim.contains("heami"))) {
             await flutterTts.setVoice({
@@ -370,6 +371,8 @@ class AsistanAnaSayfaState extends State<AsistanAnaSayfa>
         return "ja-JP";
       case "Almanca":
         return "de-DE";
+      case "İtalyanca":
+        return "it-IT";
       case "İspanyolca":
         return "es-ES";
       case "Çince":
