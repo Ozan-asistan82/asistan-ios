@@ -20,13 +20,21 @@ jobs:
       - name: Paketleri Indir
         run: flutter pub get
 
-      - name: Imzasiz iOS Uygulamasi Derle
-        run: flutter build ios --release --no-codesign
+      - name: CocoaPods Kur
+        run: |
+          cd ios
+          pod install
+          cd ..
+
+      - name: Xcode Imzasiz Archive Olustur
+        run: |
+          flutter build ios --config-only --release --no-codesign
+          xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -configuration Release -sdk iphoneos -archivePath build/ios/Runner.xcarchive archive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
 
       - name: IPA Paketi Olustur
         run: |
           mkdir -p Payload
-          cp -r build/ios/iphoneos/Runner.app Payload/
+          cp -r build/ios/Runner.xcarchive/Products/Applications/Runner.app Payload/
           zip -r Asistan-iOS.ipa Payload
 
       - name: Asistan-iOS.ipa Dosyasini Yayinla
