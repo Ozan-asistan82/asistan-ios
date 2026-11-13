@@ -270,7 +270,7 @@ class AsistanAnaSayfaState extends State<AsistanAnaSayfa>
           permission == LocationPermission.always) {
         Position? pos = await Geolocator.getLastKnownPosition();
         if (pos != null) {
-          List<Placemark> placemarks = await placemarkFromCoordinates(
+          List<Placemark> placemarks = await (GeocodingPlatform.instance?.placemarkFromCoordinates(
             pos.latitude,
             pos.longitude,
           ).timeout(const Duration(seconds: 4));
