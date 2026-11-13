@@ -1,0 +1,36 @@
+name: iOS IPA Build
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-ios:
+    runs-on: macos-latest
+    steps:
+      - name: Depoyu Cek
+        uses: actions/checkout@v4
+
+      - name: Flutter Kur
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Paketleri Indir
+        run: flutter pub get
+
+      - name: Imzasiz iOS Uygulamasi Derle
+        run: flutter build ios --release --no-codesign
+
+      - name: IPA Paketi Olustur
+        run: |
+          mkdir -p Payload
+          cp -r build/ios/iphoneos/Runner.app Payload/
+          zip -r Asistan-iOS.ipa Payload
+
+      - name: Asistan-iOS.ipa Dosyasini Yayinla
+        uses: actions/upload-artifact@v4
+        with:
+          name: Asistan-iOS-IPA
+          path: Asistan-iOS.ipa
